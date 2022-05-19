@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Dropdown, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { productAction } from "../redux/actions/productAction";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const ProductDetail = () => {
   let { id } = useParams();
-  const [product, setProduct] = useState(null);
-
+  const product = useSelector((state) => state.product.selectedItem);
+  const dispatch = useDispatch();
   const getProductDetail = async () => {
-    let url = `https://my-json-server.typicode.com/koreasledo/hnm-project/products/${id}`;
-    let response = await fetch(url);
-    let data = await response.json();
-    setProduct(data);
+    dispatch(productAction.getProductDetail(id));
   }
 
   useEffect(()=> {
